@@ -4,6 +4,8 @@ import com.example.demo.domains.Aluno;
 import com.example.demo.gateways.requests.AlunoPatchNome;
 import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
+import com.example.demo.usecases.CadastraAluno;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Classe com RequestMapping(/aluno) <p>
  * Método com GetMapping(/fiap)<p>
  * o endpoint exposto final para esse conjunto será: "/aluno/fiap" <p>
+ *
  * @see RestController
  * @see RequestMapping
  * @see GetMapping
@@ -30,26 +33,26 @@ import org.springframework.web.bind.annotation.RestController;
  * @see PostMapping
  * @see PatchMapping
  * @see org.springframework.web.bind.annotation.DeleteMapping
- *
  */
 
 @RestController
 @RequestMapping("/aluno/fiap")
+@RequiredArgsConstructor
 public class AlunoController {
+
+  private final CadastraAluno cadastraAluno;
 
   /**
    * {@link ResponseEntity} é um retorno que dá mais liberdade para manipular os status code que podemos entregar na API
-   *
    */
   @GetMapping
   public ResponseEntity<String> getAlunos() {
-    return ResponseEntity.ok( "Hello World");
+    return ResponseEntity.ok("Hello World");
   }
 
   /**
    * Também podemos retornar o propiro objeto sem fazer uso de ResponseEntity, porem perdemos a habilidade de manipular explicitamente o status code <p>
    * Assim fazemos uso do {@link ResponseStatus} para deixar claro qual o status de sucesso deve ser exposto
-   *
    */
   @GetMapping("/{alunoId}")
   @ResponseStatus(HttpStatus.OK)
@@ -60,20 +63,20 @@ public class AlunoController {
   @PostMapping
   public ResponseEntity<AlunoResponse> postAluno(@RequestBody AlunoPostRequest aluno) {
     String[] nomeSplitado = aluno.nomeCompleto().split(" ");
-    Aluno alunoAtualizado = new Aluno(nomeSplitado[0], nomeSplitado[1],aluno.documento(), aluno.registro());
-    alunoAtualizado.setId("23456789ssdfgh");
+    Aluno paraCriar = new Aluno(nomeSplitado[0], nomeSplitado[1], aluno.documento(), null);
+    Aluno alunoAtualizado = cadastraAluno.executa(paraCriar);
     AlunoResponse alunoResponse = AlunoResponse.builder()
         .primeiroNome(alunoAtualizado.getPrimeiroNome())
         .sobrenome(alunoAtualizado.getSobrenome())
         .documento(alunoAtualizado.getDocumento())
-        .registro(alunoAtualizado.getRegistro())
+        .registro(String.valueOf(alunoAtualizado.getRegistro()))
         .build();
     return ResponseEntity.ok(alunoResponse);
   }
 
 
   @PatchMapping("/{alunoId}/nome")
-  public ResponseEntity<AlunoResponse> atualizaNome(@PathVariable String alunoId, @RequestBody AlunoPatchNome nome ) {
+  public ResponseEntity<AlunoResponse> atualizaNome(@PathVariable String alunoId, @RequestBody AlunoPatchNome nome) {
     return null;
   }
 }
