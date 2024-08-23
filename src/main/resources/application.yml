@@ -6,9 +6,7 @@ spring:
     url: jdbc:h2:mem:java-advanced
     driverClassName: org.h2.Driver
     username: sa
-    password: password
+    password: ""
   jpa:
     database:
       platform: org.hibernate.dialect.H2Dialect
-
-

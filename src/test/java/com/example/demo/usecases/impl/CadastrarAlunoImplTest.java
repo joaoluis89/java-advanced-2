@@ -1,14 +1,14 @@
 package com.example.demo.usecases.impl;
 
 import com.example.demo.domains.Aluno;
-import com.example.demo.usecases.CadastraAluno;
+import com.example.demo.usecases.CadastrarAluno;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CadastraAlunoImplTest {
+class CadastrarAlunoImplTest {
 
-  CadastraAluno cadastrarAluno = new CadastraAlunoImpl(null);
+  CadastrarAluno cadastrarAluno = new CadastrarAlunoImpl(null);
 
   @Test
   @DisplayName("Testa se as infos do objeto alunoASerCadastrado foram devidamente copiadas para un novo objeto")

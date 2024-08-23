@@ -4,7 +4,8 @@ import com.example.demo.domains.Aluno;
 import com.example.demo.gateways.requests.AlunoPatchNome;
 import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
-import com.example.demo.usecases.CadastraAluno;
+import com.example.demo.usecases.CadastrarAluno;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AlunoController {
 
-  private final CadastraAluno cadastraAluno;
+  private final CadastrarAluno cadastrarAluno;
 
   /**
    * {@link ResponseEntity} é um retorno que dá mais liberdade para manipular os status code que podemos entregar na API
@@ -63,20 +64,23 @@ public class AlunoController {
   @PostMapping
   public ResponseEntity<AlunoResponse> postAluno(@RequestBody AlunoPostRequest aluno) {
     String[] nomeSplitado = aluno.nomeCompleto().split(" ");
-    Aluno paraCriar = new Aluno(nomeSplitado[0], nomeSplitado[1], aluno.documento(), null);
-    Aluno alunoAtualizado = cadastraAluno.executa(paraCriar);
+
+    Aluno alunoASerCadastrado = new Aluno(nomeSplitado[0], nomeSplitado[1], aluno.documento(), null);
+    Aluno alunoCadastrado = cadastrarAluno.executa(alunoASerCadastrado);
+
     AlunoResponse alunoResponse = AlunoResponse.builder()
-        .primeiroNome(alunoAtualizado.getPrimeiroNome())
-        .sobrenome(alunoAtualizado.getSobrenome())
-        .documento(alunoAtualizado.getDocumento())
-        .registro(String.valueOf(alunoAtualizado.getRegistro()))
+        .primeiroNome(alunoCadastrado.getPrimeiroNome())
+        .sobrenome(alunoCadastrado.getSobrenome())
+        .documento(alunoCadastrado.getDocumento())
+        .registro(String.valueOf(alunoCadastrado.getRegistro()))
         .build();
     return ResponseEntity.ok(alunoResponse);
   }
 
 
   @PatchMapping("/{alunoId}/nome")
-  public ResponseEntity<AlunoResponse> atualizaNome(@PathVariable String alunoId, @RequestBody AlunoPatchNome nome) {
-    return null;
+  public ResponseEntity<AlunoPatchNome> atualizaNome(@PathVariable String alunoId, @RequestBody @Valid
+  AlunoPatchNome nome) {
+    return ResponseEntity.ok(nome);
   }
 }

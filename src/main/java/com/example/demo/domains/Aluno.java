@@ -1,5 +1,6 @@
 package com.example.demo.domains;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -44,10 +45,13 @@ public class Aluno extends Pessoa{
 
   @Id
   @GeneratedValue
-  private String registro;
-  private String id;
+  private Integer registro;
 
-  public Aluno(String primeiroNome, String sobrenome, String documento, String registro) {
+  @Column(name = "nickname", nullable = false)
+  private String apelido;
+
+
+  public Aluno(String primeiroNome, String sobrenome, String documento, Integer registro) {
     super(primeiroNome, sobrenome, documento);
     this.registro = registro;
   }
