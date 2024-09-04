@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CadastrarAlunoImpl implements CadastrarAluno {
 
-  private final AlunoRepository alunoRepository;
+  private final  AlunoRepository alunoRepository;
 
   @Override
   public Aluno executa(Aluno alunoParaSerCadastrado) {

@@ -3,7 +3,9 @@ package com.example.demo.domains;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,15 +46,14 @@ import lombok.NoArgsConstructor;
 public class Aluno extends Pessoa{
 
   @Id
-  @GeneratedValue
-  private Integer registro;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID registro;
 
-  @Column(name = "nickname", nullable = false)
+  @Column(name = "nickname")
   private String apelido;
 
 
-  public Aluno(String primeiroNome, String sobrenome, String documento, Integer registro) {
+  public Aluno(String primeiroNome, String sobrenome, String documento, String registro) {
     super(primeiroNome, sobrenome, documento);
-    this.registro = registro;
   }
 }

@@ -1,20 +1,31 @@
 package com.example.demo.usecases.impl;
 
 import com.example.demo.domains.Aluno;
+import com.example.demo.gateways.AlunoRepository;
 import com.example.demo.usecases.CadastrarAluno;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class CadastrarAlunoImplTest {
 
-  CadastrarAluno cadastrarAluno = new CadastrarAlunoImpl(null);
+  @Mock
+  AlunoRepository alunoRepository;
+
+  @InjectMocks
+  CadastrarAluno cadastrarAluno;
 
   @Test
   @DisplayName("Testa se as infos do objeto alunoASerCadastrado foram devidamente copiadas para un novo objeto")
   void testExecutaDeCadastrarAlunoParaIf(){
     //Dado uma condicao, Arrange, Expected
     Aluno alunoASerCadastrado = new Aluno();
+//    Mockito.when(alunoRepository.save(Mockito.any())).thenReturn(ALuno)
     alunoASerCadastrado.setPrimeiroNome("Joao");
     alunoASerCadastrado.setSobrenome("Veronezzi");
 

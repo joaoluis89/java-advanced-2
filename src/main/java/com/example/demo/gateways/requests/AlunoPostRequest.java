@@ -1,5 +1,8 @@
 package com.example.demo.gateways.requests;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
 /**
  * A classe {@code AlunoPostRequest} é um exemplo de record introduzido no Java 14 como uma prévia
  * e estabilizado no Java 16.
@@ -30,5 +33,11 @@ package com.example.demo.gateways.requests;
  * </ul>
  */
 
-public record AlunoPostRequest(String nomeCompleto, String documento, String registro) {
+@Valid
+public record AlunoPostRequest(
+    String nomeCompleto,
+    @NotNull String documento,
+    String registro
+    ) {
+
 }
