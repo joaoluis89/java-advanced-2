@@ -1,6 +1,7 @@
 package com.example.demo.gateways;
 
 import com.example.demo.domains.Aluno;
+import com.example.demo.domains.Pessoa;
 import com.example.demo.gateways.requests.AlunoPatchNome;
 import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
@@ -71,13 +72,18 @@ public class AlunoController {
   public ResponseEntity<AlunoResponse> postAluno(@RequestBody @Valid AlunoPostRequest aluno) {
     String[] nomeSplitado = aluno.nomeCompleto().split(" ");
 
-    Aluno alunoASerCadastrado = new Aluno(nomeSplitado[0], nomeSplitado[1], aluno.documento(), null);
+    Aluno alunoASerCadastrado = Aluno.builder()
+        .pessoa(Pessoa.builder()
+            .primeiroNome(nomeSplitado[0])
+            .sobrenome(nomeSplitado[1])
+            .build())
+        .build();
     Aluno alunoCadastrado = cadastrarAluno.executa(alunoASerCadastrado);
 
     AlunoResponse alunoResponse = AlunoResponse.builder()
-        .primeiroNome(alunoCadastrado.getPrimeiroNome())
-        .sobrenome(alunoCadastrado.getSobrenome())
-        .documento(alunoCadastrado.getDocumento())
+        .primeiroNome(alunoCadastrado.getPessoa().getPrimeiroNome())
+        .sobrenome(alunoCadastrado.getPessoa().getSobrenome())
+        .documento(alunoCadastrado.getPessoa().getDocumento())
         .registro(String.valueOf(alunoCadastrado.getRegistro()))
         .build();
     return ResponseEntity.ok(alunoResponse);

@@ -1,12 +1,13 @@
 package com.example.demo.domains;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.UUID;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -40,20 +41,18 @@ import lombok.NoArgsConstructor;
 
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Aluno extends Pessoa{
+public class Aluno {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID registro;
+  private String registro;
 
-  @Column(name = "nickname")
   private String apelido;
 
-
-  public Aluno(String primeiroNome, String sobrenome, String documento, String registro) {
-    super(primeiroNome, sobrenome, documento);
-  }
+  @OneToOne(cascade = CascadeType.ALL)
+  private Pessoa pessoa;
 }
