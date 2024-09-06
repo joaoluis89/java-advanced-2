@@ -53,6 +53,8 @@ public class Aluno {
 
   private String apelido;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  private String materiaPreferida;
+
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
   private Pessoa pessoa;
 }

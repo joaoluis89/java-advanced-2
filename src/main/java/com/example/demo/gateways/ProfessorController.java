@@ -4,7 +4,6 @@ import com.example.demo.domains.Aluno;
 import com.example.demo.domains.Professor;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +26,9 @@ public class ProfessorController {
     }
 
     @PatchMapping("/{professorId}/alunos")
-    public Optional<Professor> associaAlunos(@PathVariable UUID professorId, @RequestBody List<UUID> listaDeIdsDeAlunos) {
+    public Optional<Professor> associaAlunos(@PathVariable String professorId, @RequestBody List<String> listaDeIdsDeAlunos) {
         List<Aluno> allById = alunoRepository.findAllById(listaDeIdsDeAlunos);
-        Optional<Professor> professor = professorRepository.findById(professorId.toString());
+        Optional<Professor> professor = professorRepository.findById(professorId);
         professor.ifPresent(professor1 -> {
             professor1.setAlunos(allById);
             professorRepository.save(professor1);
