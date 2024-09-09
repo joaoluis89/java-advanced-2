@@ -29,6 +29,6 @@ public class Professor {
     @OneToOne(cascade = CascadeType.ALL)
     private Pessoa pessoa;
 
-    @OneToMany
+    @OneToMany(mappedBy = "professor")
     private List<Aluno> alunos;
 }

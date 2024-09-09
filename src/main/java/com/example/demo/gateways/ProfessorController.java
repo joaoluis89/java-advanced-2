@@ -20,10 +20,18 @@ public class ProfessorController {
     private final ProfessorRepository professorRepository;
     private final AlunoRepository alunoRepository;
 
+    //DTO tipoRequest
+    //DTO response
+    //mapeio do dto de request para uma entidade professor -> save na base -> retorno de um response sem Id do professor
     @PostMapping
     public Professor criaProfessor(@RequestBody Professor professor) {
         return professorRepository.save(professor);
     }
+
+
+    //getPorProfessorID
+    //Request
+    //Response
 
     @PatchMapping("/{professorId}/alunos")
     public Optional<Professor> associaAlunos(@PathVariable String professorId, @RequestBody List<String> listaDeIdsDeAlunos) {

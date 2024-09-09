@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,4 +58,7 @@ public class Aluno {
 
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
   private Pessoa pessoa;
+
+  @ManyToOne
+  private Professor professor;
 }
