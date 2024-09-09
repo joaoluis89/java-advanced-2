@@ -1,52 +1,87 @@
-Este projeto demonstra o uso do Spring Boot para criar uma API RESTful. Aqui você encontrará explicações sobre conceitos básicos relacionados ao Spring Boot, APIs REST, verbos HTTP e códigos de status HTTP.
+Seja bem-vindo ao Checkpoint 1 de Java Advanced - Turma 2TDSPR.  
+Este CP tem por objetivo aferir seus conhecimentos a respeito de todo o conteúdo visto em sala de aula durante o mês de agosto de 2024.  
+Este CP é composto por duas sessões: Sessão Teórica (3 pontos) e Sessão Prática (7 pontos).  
+***LEIA ATENTAMENTE O ENUNCIADO DE CADA QUESTÃO***  
+**Boa prova.**
 
-## Sumário
+## Sessão Teórica
 
-- [Spring Boot](#spring-boot)
-- [API REST](#api-rest)
-- [Verbos HTTP](#verbos-http)
-- [Códigos de Status HTTP](#códigos-de-status-http)
+1: Atribua o número em A à sua respectiva descrição em B.
 
-## Spring Boot
+| A | Verbo HTTP |
+|:-:|------------|
+| 1 | DELETE     |
+| 2 | POST       |
+| 3 | GET        |
+| 4 | PUT        |
+| 5 | PATCH      |
 
-Spring Boot é um framework Java que simplifica o desenvolvimento de aplicações Java, especialmente as baseadas em Spring, ao configurar automaticamente a aplicação e permitir o uso de convenções ao invés de configurações explícitas. Ele elimina a necessidade de configuração manual extensa e facilita a criação e execução de serviços e aplicações de maneira rápida e eficiente.
+| B | Descrição                                                            |
+|:-:|----------------------------------------------------------------------|
+|   | Envia dados para criar um novo recurso no servidor.                  |
+|   | Recupera dados de um recurso específico sem alterar seu estado.      |
+|   | Remove um recurso específico do servidor.                            |
+|   | Aplica modificações parciais a um recurso existente.                 |
+|   | Atualiza completamente um recurso existente com os dados fornecidos. |
 
-### Características Principais:
+2: Em um servidor com validação de contrato implementada, qual status code
+o servidor deve retornar quando uma requisição possui um body com dados inválidos?
+Preencha a única alternativa correta com um X dentro de []: \
+A) 500 - Internal Server Error []  
+B) 400 - Bad Request []  
+C) 404 - Not Found []  
+D) 422 - Unprocessable Entity []  
+E) 200 - Ok []
 
-- **Configuração Automática:** Spring Boot fornece uma configuração padrão que pode ser customizada conforme necessário, permitindo que você comece a desenvolver rapidamente.
-- **Servidor Web Embutido:** Você pode executar aplicações Spring Boot diretamente em um servidor embutido como Tomcat, sem a necessidade de empacotá-las como WAR.
-- **Dependências Starter:** Spring Boot oferece uma coleção de "starters" para simplificar a adição de bibliotecas à sua aplicação.
+3: Qual o status code mais adequado para retornar em uma operação de POST bem-sucedida?
+Preencha a única alternativa correta com um X dentro de []: \
+A) 200 - Ok []  
+B) 202 - Accepted []  
+C) 201 - Created []  
+D) 204 - No Content []  
+E) 208 - Already Reported []
 
-## API REST
+4: Preencha a única alternativa correta com um X dentro de []. O Spring é:  
+D) Uma mãe e um sistema operacional para dispositivos móveis [] \
+A) Uma mãe e uma biblioteca [] \
+E) Uma mãe e um editor de texto para documentos acadêmicos [] \
+B) Uma mãe e um framework [] \
+F) Uma mãe e uma linguagem de programação desenvolvida pela Oracle [] \
 
-API REST (Representational State Transfer) é um estilo arquitetural que utiliza os princípios do protocolo HTTP para construção de serviços web escaláveis e performáticos. As APIs RESTful se comunicam utilizando requisições HTTP e são descritas pelas suas operações de manipulação (Verbos) de recursos.
+## Sessão Prática
 
-### Características de uma API RESTful:
+### Controllers
 
-- **Stateless:** Cada pedido de cliente para servidor deve conter todas as informações necessárias para entender e processar o pedido.
-- **Interface Uniforme:** Simplifica e desconsidera a arquitetura, beneficiando a independência da aplicação da parte cliente.
+Ajuste a interface ProfessorController criando os métodos solicitados nos comentários \
+Implemente um ProfessorControllerImpl de acordo com a Interface ProfessorController constante no CP. \
+Utilize o mapeamento de rotas, verbos http e response code mais adequado baseado na operação solicitada; \
+Implemente java validation quando solicitado \
+Utilize sempre que possível o conceito de DTO e independência de camadas
 
-## Verbos HTTP
+Uma requisição básica conterá o body:
+```
+{
+  "id": "string",
+  "nome": "string,
+  "materia": "string
+}
+```
 
-Os verbos HTTP definem o tipo de operação que está sendo solicitada. Os mais comuns em APIs RESTful incluem:
+### Usecases
+Implemente um SalvaProfessorImpl de acordo com a interface SalvaProfessor fornecida no CP;\
+Disponibilize ele como um `Bean`
+Além do método que você utilizou, comente na classe SalvaProfessorImpl outro método para registro de Beans
 
-- **GET:** Recupera dados de um servidor no servidor por URI fornecida. É seguro e idempotente.
-- **POST:** Envia dados para o servidor para criar um novo recurso. Pode resultar em uma modificação do estado do servidor.
-- **PUT:** Atualiza um recurso completo no servidor com dados fornecidos na requisição.
-- **PATCH:** Atualiza parcialmente um recurso no servidor.
-- **DELETE:** Remove um recurso do servidor.
+### Repositories
+Crie um Repository para o domínio Professor, esse repository deve também ser um JPARepository
 
-## Códigos de Status HTTP
+### Domain
+Anote o domínio professor com as devidas annotations para que ele possa ser persistido em uma base de dados relacional
 
-Os códigos de status HTTP mostram o resultado de uma requisição HTTP. Eles são divididos em categorias:
-
-- **1xx (Informacionais):** Indica que o pedido foi recebido e o processo continua.
-- **2xx (Sucesso):** A requisição foi recebida com sucesso. Exemplos:
-  - **200 OK:** Requisição bem-sucedida.
-  - **201 Created:** Novo recurso foi criado com sucesso.
-- **3xx (Redirecionamento):** A ação adicional é necessária para completar o pedido.
-- **4xx (Erro do Cliente):** A requisição contém sintaxe inválida ou não pode ser cumprida. Exemplos:
-  - **400 Bad Request:** O servidor não pode ou não processará o pedido devido a algo que é percebido como um erro do cliente.
-  - **404 Not Found:** O recurso requisitado não foi encontrado.
-- **5xx (Erro do Servidor):** O servidor falhou ao completar uma requisição aparentemente válida. Exemplos:
-  - **500 Internal Server Error:** Um erro genérico para quando o servidor encontra uma condição inesperada.
+### Fase integrada
+Ajuste a interface ProfessorControllerIntegrado criando uma assinatura de acordo com o solicitado \
+Faça ProfessorControllerImpl também implementar a interface ProfessorControllerIntegrado \
+Realize uma injeção de dependencia de SalvaProfessor no controller \
+Injete o repository de professor em SalvaProfessor \
+Garanta que pelo menos un registro de Professor foi salvo no banco de dados \
+Garanta a independência de camadas
