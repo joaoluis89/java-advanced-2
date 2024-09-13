@@ -18,17 +18,17 @@ Este CP é composto por duas sessões: Sessão Teórica (3 pontos) e Sessão Pr�
 
 | B | Descrição                                                            |
 |:-:|----------------------------------------------------------------------|
-|   | Envia dados para criar um novo recurso no servidor.                  |
-|   | Recupera dados de um recurso específico sem alterar seu estado.      |
-|   | Remove um recurso específico do servidor.                            |
-|   | Aplica modificações parciais a um recurso existente.                 |
-|   | Atualiza completamente um recurso existente com os dados fornecidos. |
+| 2 | Envia dados para criar um novo recurso no servidor.                  |
+| 3 | Recupera dados de um recurso específico sem alterar seu estado.      |
+| 1 | Remove um recurso específico do servidor.                            |
+| 5 | Aplica modificações parciais a um recurso existente.                 |
+| 4 | Atualiza completamente um recurso existente com os dados fornecidos. |
 
 2: Em um servidor com validação de contrato implementada, qual status code
 o servidor deve retornar quando uma requisição possui um body com dados inválidos?
 Preencha a única alternativa correta com um X dentro de []: \
 A) 500 - Internal Server Error []  
-B) 400 - Bad Request []  
+B) 400 - Bad Request [X]  
 C) 404 - Not Found []  
 D) 422 - Unprocessable Entity []  
 E) 200 - Ok []
@@ -37,7 +37,7 @@ E) 200 - Ok []
 Preencha a única alternativa correta com um X dentro de []: \
 A) 200 - Ok []  
 B) 202 - Accepted []  
-C) 201 - Created []  
+C) 201 - Created [X]  
 D) 204 - No Content []  
 E) 208 - Already Reported []
 
@@ -45,7 +45,7 @@ E) 208 - Already Reported []
 D) Uma mãe e um sistema operacional para dispositivos móveis [] \
 A) Uma mãe e uma biblioteca [] \
 E) Uma mãe e um editor de texto para documentos acadêmicos [] \
-B) Uma mãe e um framework [] \
+B) Uma mãe e um framework [X] \
 F) Uma mãe e uma linguagem de programação desenvolvida pela Oracle [] \
 
 ## Sessão Prática
