@@ -44,4 +44,6 @@ public class ProfessorController {
 
         return professor;
     }
+
+    //Crie um endpoint que atualiza o nome do professor na base de dados
 }
