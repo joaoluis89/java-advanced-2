@@ -7,7 +7,9 @@ import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
 import com.example.demo.usecases.CadastrarAluno;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AlunoController {
 
   private final CadastrarAluno cadastrarAluno;
+  private final AlunoRepository alunoRepository;
   //localhost:8080/aluno/fiap?sala=2tds
   //localhost:8080/aluno/fiap/sala
 
@@ -77,6 +80,7 @@ public class AlunoController {
             .primeiroNome(nomeSplitado[0])
             .sobrenome(nomeSplitado[1])
             .build())
+        .dataDaMatricula(LocalDate.now())
         .build();
     Aluno alunoCadastrado = cadastrarAluno.executa(alunoASerCadastrado);
 
@@ -94,5 +98,12 @@ public class AlunoController {
   public ResponseEntity<AlunoPatchNome> atualizaNome(@PathVariable String alunoId, @RequestBody @Valid
   AlunoPatchNome nome) {
     return ResponseEntity.ok(nome);
+  }
+
+
+  @GetMapping("/{alunoId}")
+  public ResponseEntity<String> getAluno(@PathVariable String alunoId) {
+    Optional<Aluno> byId = alunoRepository.findById(alunoId);
+    return ResponseEntity.ok("Hello World");
   }
 }
