@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -103,7 +106,30 @@ public class AlunoController {
 
   @GetMapping("/{alunoId}")
   public ResponseEntity<String> getAluno(@PathVariable String alunoId) {
-    Optional<Aluno> byId = alunoRepository.findById(alunoId);
+    Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
+
+
+
     return ResponseEntity.ok("Hello World");
   }
+
+  @GetMapping("/apelido/{apelido}")
+  public ResponseEntity<String> getAlunoPorApelido(@PathVariable String apelido) {
+    Optional<Aluno> optionalAluno = alunoRepository.findAlunoByApelido(apelido);
+
+
+
+    return ResponseEntity.ok("Hello World");
+  }
+
+  @GetMapping("/materia-preferida")
+  public ResponseEntity<Page<Aluno>> getAlunoPorMateria(@RequestParam String materia, @RequestParam Integer page, @RequestParam(required = false, defaultValue = "DESC")
+  Sort.Direction sortingType) {
+
+    PageRequest pageRequest = PageRequest.of(page, 21, Sort.by(sortingType, "pessoa.sobrenome").descending());
+    Page<Aluno> alunosByMateriaPreferida = alunoRepository.findAlunosByMateriaPreferida(materia, pageRequest);
+
+    return ResponseEntity.ok(alunosByMateriaPreferida);
+  }
+
 }

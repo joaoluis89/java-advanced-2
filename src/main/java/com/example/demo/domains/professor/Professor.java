@@ -1,9 +1,9 @@
-package com.example.demo.domains;
+package com.example.demo.domains.professor;
 
+import com.example.demo.domains.Aluno;
+import com.example.demo.domains.Pessoa;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -21,14 +21,13 @@ import lombok.NoArgsConstructor;
 public class Professor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private ProfessorId professorId;
 
-    private String materia;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Pessoa pessoa;
 
     @OneToMany(mappedBy = "professor")
     private List<Aluno> alunos;
+
 }

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.domains.Aluno;
+import com.example.demo.domains.AuditableData;
 import com.example.demo.domains.Pessoa;
 import com.example.demo.gateways.AlunoRepository;
 import java.time.LocalDate;
@@ -35,6 +36,8 @@ public class DemoApplication {
 					.build())
 				.dataDaMatricula(now)
 				.apelido("" + i)
+				.materiaPreferida("JavaAdvanced")
+				.auditableData(new AuditableData())
 				.build();
 			alunoRepository.save(alunoASerCadastrado);
 		}

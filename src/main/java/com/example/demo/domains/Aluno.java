@@ -1,5 +1,6 @@
 package com.example.demo.domains;
 
+import com.example.demo.domains.professor.Professor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -69,4 +70,6 @@ public class Aluno {
   private List<Materia> materias;
 
   private LocalDate dataDaMatricula;
+
+  private AuditableData auditableData;
 }

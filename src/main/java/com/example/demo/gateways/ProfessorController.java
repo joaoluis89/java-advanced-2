@@ -1,7 +1,7 @@
 package com.example.demo.gateways;
 
 import com.example.demo.domains.Aluno;
-import com.example.demo.domains.Professor;
+import com.example.demo.domains.professor.Professor;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
