@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 
 /**
@@ -50,7 +51,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Aluno {
+public class Aluno extends RepresentationModel<Aluno> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

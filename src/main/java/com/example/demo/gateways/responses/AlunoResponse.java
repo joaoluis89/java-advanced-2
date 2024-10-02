@@ -1,7 +1,10 @@
 package com.example.demo.gateways.responses;
 
+import com.example.demo.domains.Materia;
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 
 /**
@@ -46,10 +49,11 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AlunoResponse {
+public class AlunoResponse extends RepresentationModel<AlunoResponse> {
 
   private String primeiroNome;
   private String sobrenome;
   private String documento;
   private String registro;
+  private List<Materia> materiaList;
 }
