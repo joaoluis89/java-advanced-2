@@ -12,3 +12,7 @@ spring:
       ddl-auto: create
 
     database-platform: org.hibernate.dialect.OracleDialect
+
+logging:
+  level:
+    org.springframework.security: trace

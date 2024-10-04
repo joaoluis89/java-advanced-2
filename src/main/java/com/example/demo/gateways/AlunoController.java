@@ -21,8 +21,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -76,11 +76,11 @@ public class AlunoController {
      * Também podemos retornar o propiro objeto sem fazer uso de ResponseEntity, porem perdemos a habilidade de manipular explicitamente o status code <p>
      * Assim fazemos uso do {@link ResponseStatus} para deixar claro qual o status de sucesso deve ser exposto
      */
-    @GetMapping("/{salaId}/{alunoId}/nome")
-    @ResponseStatus(HttpStatus.OK)
-    public Aluno getAluno(@PathVariable String alunoId, @PathVariable String salaId) {
-        return new Aluno();
-    }
+//    @GetMapping("/{salaId}/{alunoId}/nome")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Aluno getAluno(@PathVariable String alunoId, @PathVariable String salaId) {
+//        return new Aluno();
+//    }
 
     @PostMapping
     public ResponseEntity<AlunoResponse> postAluno(@RequestBody @Valid AlunoPostRequest aluno) {
@@ -142,7 +142,7 @@ public class AlunoController {
 
 
     @GetMapping("/{alunoId}")
-    public AlunoResponse getAluno(@PathVariable String alunoId) {
+    public AlunoResponse getAluno(Authentication authentication,  @PathVariable String alunoId) {
         Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
 
         return optionalAluno.map(this::getAlunoResponse).orElse(null);
@@ -159,7 +159,7 @@ public class AlunoController {
             .add(
                 linkTo(AlunoController.class,
                     methodOn(AlunoController.class)
-                        .getAluno(aluno.getRegistro())
+                        .getAluno(null, aluno.getRegistro())
                 ).withSelfRel()
                     .andAffordance(
                         afford(methodOn(AlunoController.class)
