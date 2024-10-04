@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class AlunoPatchNome {
+public class AlunoPatchNome  {
 
   @NotEmpty
   private String primeiroNome;

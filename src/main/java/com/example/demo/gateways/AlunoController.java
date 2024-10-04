@@ -1,11 +1,16 @@
 package com.example.demo.gateways;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import com.example.demo.domains.Aluno;
 import com.example.demo.domains.Materia;
 import com.example.demo.domains.Pessoa;
 import com.example.demo.gateways.requests.AlunoPatchNome;
 import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
+import com.example.demo.gateways.responses.MateriaResponse;
 import com.example.demo.usecases.CadastrarAluno;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
@@ -16,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -98,7 +102,7 @@ public class AlunoController {
             .registro(String.valueOf(alunoCadastrado.getRegistro()))
             .build();
 
-        Link link = WebMvcLinkBuilder.linkTo(AlunoController.class).slash(alunoCadastrado.getRegistro()).withSelfRel();
+        Link link = linkTo(AlunoController.class).slash(alunoCadastrado.getRegistro()).withSelfRel();
         alunoResponse.add(link);
         return ResponseEntity.ok(alunoResponse);
     }
@@ -123,30 +127,56 @@ public class AlunoController {
 
 
     @PatchMapping("/{alunoId}/nome")
-    public ResponseEntity<AlunoPatchNome> atualizaNome(@PathVariable String alunoId, @RequestBody @Valid
+    public AlunoResponse atualizaNome(@PathVariable String alunoId, @RequestBody @Valid
     AlunoPatchNome nome) {
-        return ResponseEntity.ok(nome);
+
+        Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
+
+        return optionalAluno.map(aluno -> {
+            aluno.getPessoa().setPrimeiroNome(nome.getPrimeiroNome());
+            return alunoRepository.save(aluno);
+
+        }).map(this::getAlunoResponse).orElse(null);
+
     }
 
 
     @GetMapping("/{alunoId}")
-    public Optional<AlunoResponse> getAluno(@PathVariable String alunoId) {
+    public AlunoResponse getAluno(@PathVariable String alunoId) {
         Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
-        Aluno aluno1 = optionalAluno.get();
-        aluno1.getMaterias().forEach(materia -> {
-            Link link =
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(AlunoController.class).getMateria(materia.getId()))
-                    .withSelfRel();
-            materia.add(link);
-        });
 
-        return optionalAluno.map(aluno -> AlunoResponse.builder()
+        return optionalAluno.map(this::getAlunoResponse).orElse(null);
+    }
+
+    private AlunoResponse getAlunoResponse(Aluno aluno) {
+        return AlunoResponse.builder()
             .primeiroNome(aluno.getPessoa().getPrimeiroNome())
             .sobrenome(aluno.getPessoa().getSobrenome())
             .documento(aluno.getPessoa().getDocumento())
             .registro(String.valueOf(aluno.getRegistro()))
-            .materiaList(aluno1.getMaterias())
-            .build());
+            .materiaList(aluno.getMaterias().stream().map(this::materiaToResponse).toList())
+            .build()
+            .add(
+                linkTo(AlunoController.class,
+                    methodOn(AlunoController.class)
+                        .getAluno(aluno.getRegistro())
+                ).withSelfRel()
+                    .andAffordance(
+                        afford(methodOn(AlunoController.class)
+                            .atualizaNome(aluno.getRegistro(), new AlunoPatchNome()))
+                    )
+            );
+    }
+
+    private MateriaResponse materiaToResponse(Materia materia) {
+        return MateriaResponse.builder()
+            .descricao(materia.getNome())
+            .build()
+            .add(linkTo(
+                    methodOn(AlunoController.class)
+                        .getMateria(materia.getId())
+                ).withSelfRel()
+            );
     }
 
     @GetMapping("/materia/{materiaId}")
