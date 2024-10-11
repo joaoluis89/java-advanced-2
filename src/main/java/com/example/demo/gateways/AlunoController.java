@@ -83,7 +83,7 @@ public class AlunoController {
 //    }
 
     @PostMapping
-    public ResponseEntity<AlunoResponse> postAluno(@RequestBody @Valid AlunoPostRequest aluno) {
+    public ResponseEntity<AlunoResponse> postAluno(Authentication authentication, @RequestBody @Valid AlunoPostRequest aluno) {
         String[] nomeSplitado = aluno.nomeCompleto().split(" ");
 
         Aluno alunoASerCadastrado = Aluno.builder()

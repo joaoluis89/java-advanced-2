@@ -16,3 +16,6 @@ spring:
 logging:
   level:
     org.springframework.security: trace
+
+jwt:
+  secret-key: 890uirwjggifokrwjpgeo5yldfsopgis80f7erw8fuyw9f8ew9f7w4r67347f397tyfg347f367ferw7fr7efger77rtgw7erfw7yfeuyfwe67rfwef67w78erfwe7
