@@ -1,21 +1,16 @@
 spring:
-#  h2:
-#    console:
-#      enabled: true
+  h2:
+    console:
+      enabled: true
   datasource:
-    url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD}
-    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:h2:mem:java-advanced
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""
   jpa:
-    hibernate:
-      ddl-auto: create
-
-    database-platform: org.hibernate.dialect.OracleDialect
+    database:
+      platform: org.hibernate.dialect.H2Dialect
 
 logging:
   level:
     org.springframework.security: trace
-
-jwt:
-  secret-key: 890uirwjggifokrwjpgeo5yldfsopgis80f7erw8fuyw9f8ew9f7w4r67347f397tyfg347f367ferw7fr7efger77rtgw7erfw7yfeuyfwe67rfwef67w78erfwe7

@@ -3,7 +3,6 @@ package com.example.demo.gateways.responses;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.hateoas.RepresentationModel;
 
 
 /**
@@ -48,7 +47,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 @Builder
 @Data
-public class AlunoResponse extends RepresentationModel<AlunoResponse> {
+public class AlunoResponse {
 
   private String primeiroNome;
   private String sobrenome;
