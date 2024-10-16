@@ -29,8 +29,9 @@ public class SpringSecurityConfiguration {
             .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                     authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/usuario").permitAll()
-                        .requestMatchers("/aluno").hasRole("ALUNO")
+                        .requestMatchers("/aluno/**").hasRole("ALUNO")
                         .requestMatchers("/auth").hasRole("USUARIO")
+                        .anyRequest().denyAll()
             )
             .oauth2ResourceServer(oauthServer -> oauthServer.jwt(Customizer.withDefaults()))
             .httpBasic(Customizer.withDefaults())
