@@ -5,29 +5,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
-import java.util.List;
-import lombok.Getter;
+import lombok.Data;
 
 @Entity
-@Getter
-public class Aluno {
+@Data
+public class Estuda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne
-    private Usuario usuario;
+    @ManyToOne
+    private Aluno aluno;
 
     @ManyToOne
-    private Turma turma;
+    private Materia materia;
 
-    @OneToMany(mappedBy = "aluno")
-    private List<Estuda> matriculas;
-
-    private LocalDate dataDeAdmissao;
+    private LocalDate dataDaMatricula;
 
 }
