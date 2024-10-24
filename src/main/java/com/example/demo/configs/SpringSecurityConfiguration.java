@@ -33,7 +33,7 @@ public class SpringSecurityConfiguration {
                     authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/usuario").permitAll()
                         .requestMatchers("/aluno/**").hasRole("ALUNO")
-                        .requestMatchers(HttpMethod.GET,"/auth").hasAuthority("ROLE_ALUNO")
+                        .requestMatchers(HttpMethod.GET,"/auth").hasAuthority("LECIONA")
                         .requestMatchers(HttpMethod.POST, "/auth").hasRole("USUARIO")
                         .anyRequest().denyAll()
             )

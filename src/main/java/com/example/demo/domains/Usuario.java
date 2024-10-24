@@ -39,12 +39,20 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.permissaoList.stream()
+        List<SimpleGrantedAuthority> papeis = this.permissaoList.stream()
             .map(Permissao::getPermissaoEnum)
             .map(PermissaoEnum::name)
             .map(SimpleGrantedAuthority::new)
-            .toList()
-            ;
+            .toList();
+
+        List<SimpleGrantedAuthority> autoridades = new java.util.ArrayList<>(this.permissaoList.stream()
+            .map(Permissao::getPermissaoEnum)
+            .map(PermissaoEnum::getAutoridades)
+            .flatMap(List::stream)
+            .map(SimpleGrantedAuthority::new)
+            .toList());
+        autoridades.addAll(papeis);
+        return autoridades;
     }
 
     @Override
