@@ -12,11 +12,15 @@ import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
 import com.example.demo.gateways.responses.MateriaResponse;
 import com.example.demo.usecases.CadastrarAluno;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -56,6 +60,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/aluno/fiap2")
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class AlunoController {
 
     private final CadastrarAluno cadastrarAluno;
@@ -125,12 +130,30 @@ public class AlunoController {
 //    return alunoCadastrado;
 //  }
 
-
+    @Operation(summary = "Atualiza o nome do aluno", description = "Recebe dois parametros que depois serao convertidos blablablabla")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", links = {
+            @io.swagger.v3.oas.annotations.links.Link(name = "teste", operationRef = "GET")
+        }),
+        @ApiResponse(responseCode = "404")
+    })
     @PatchMapping("/{alunoId}/nome")
-    public AlunoResponse atualizaNome(@PathVariable String alunoId, @RequestBody @Valid
-    AlunoPatchNome nome) {
+    public AlunoResponse atualizaNome(
+        @PathVariable String alunoId,
+        @RequestParam(required = false, defaultValue = "10") Integer idade,
+        @RequestBody @Valid AlunoPatchNome nome) {
+        log.debug("Log passei por aqui DEBUG {} {}", alunoId, idade);
+        log.info("Log passei por aqui INFO {} {}", alunoId, idade);
+        log.error("Log passei por aqui ERROR {} {}", alunoId, idade);
+
+        //trace
+        //debug
+        //info
+        //warn
+        //erro
 
         Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
+
 
         return optionalAluno.map(aluno -> {
             aluno.getPessoa().setPrimeiroNome(nome.getPrimeiroNome());
@@ -163,7 +186,7 @@ public class AlunoController {
                 ).withSelfRel()
                     .andAffordance(
                         afford(methodOn(AlunoController.class)
-                            .atualizaNome(aluno.getRegistro(), new AlunoPatchNome()))
+                            .atualizaNome(aluno.getRegistro(), 0, new AlunoPatchNome()))
                     )
             );
     }

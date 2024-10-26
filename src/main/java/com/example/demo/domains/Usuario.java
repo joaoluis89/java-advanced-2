@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.With;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@With
 public class Usuario implements UserDetails {
 
     @Id
@@ -57,7 +59,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "{noop}" + this.senha;
+        return this.senha;
     }
 
 }
