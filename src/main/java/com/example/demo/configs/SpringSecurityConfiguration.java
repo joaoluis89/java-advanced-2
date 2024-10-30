@@ -5,7 +5,6 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,11 +33,11 @@ public class SpringSecurityConfiguration {
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                     authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/usuario").permitAll()
-                        .requestMatchers("/aluno/**").hasRole("ALUNO")
-                        .requestMatchers(HttpMethod.GET,"/auth").hasAuthority("LECIONA")
-                        .requestMatchers(HttpMethod.POST, "/auth").hasRole("USUARIO")
-                        .anyRequest().denyAll()
+//                        .requestMatchers("/usuario").permitAll()
+//                        .requestMatchers("/aluno/**").hasRole("ALUNO")
+//                        .requestMatchers(HttpMethod.GET,"/auth").hasAuthority("LECIONA")
+//                        .requestMatchers(HttpMethod.POST, "/auth").hasRole("USUARIO")
+                        .anyRequest().permitAll()
             )
             .oauth2ResourceServer(oauthServer -> oauthServer.jwt(Customizer.withDefaults()))
             .httpBasic(Customizer.withDefaults())
