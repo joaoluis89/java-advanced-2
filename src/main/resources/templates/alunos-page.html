@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controllers</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Alunos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Materia Preferida</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iteração sobre uma lista de alunos -->
+    <tr  th:each="aluno : ${alunos}">
+        <td th:text="${aluno.getPessoa().getNomeCompleto()}">ID</td>
+        <td th:text="${aluno.getMateriaPreferida()}">Nome do Aluno</td>
+    </tr>
+
+    </tbody>
+</table>
+<div th:if="${alunos.size() == 0}">
+    <p>Nenhum aluno encontrado.</p>
+</div>
+</body>
+</html>
