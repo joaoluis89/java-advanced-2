@@ -24,4 +24,8 @@ public class Pessoa {
   private String primeiroNome;
   private String sobrenome;
   private String documento;
+
+  public String getNomeCompleto() {
+    return primeiroNome + " " + sobrenome;
+  }
 }
