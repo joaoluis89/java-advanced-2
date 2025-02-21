@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.With;
 import org.springframework.hateoas.RepresentationModel;
 
 
@@ -51,6 +52,7 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@With
 public class Aluno extends RepresentationModel<Aluno> {
 
   @Id

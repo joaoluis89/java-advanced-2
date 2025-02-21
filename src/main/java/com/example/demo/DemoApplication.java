@@ -6,6 +6,9 @@ import com.example.demo.domains.Materia;
 import com.example.demo.domains.Pessoa;
 import com.example.demo.gateways.AlunoRepository;
 import com.example.demo.gateways.MateriaRepository;
+import com.example.demo.gateways.clients.IbgeLocalidadesClient;
+import com.example.demo.gateways.clients.response.EstadoResponse;
+import com.example.demo.gateways.clients.response.MunicipioResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class DemoApplication {
 
 	private final AlunoRepository alunoRepository;
 	private final MateriaRepository materiaRepository;
+	private final IbgeLocalidadesClient ibgeLocalidadesClient;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -31,6 +35,8 @@ public class DemoApplication {
 
 	@EventListener(value = ApplicationReadyEvent.class)
 	public void setupAlunos() {
+		List<EstadoResponse> allEstados = ibgeLocalidadesClient.getAllEstados();
+		List<MunicipioResponse> municipioPorEstado = ibgeLocalidadesClient.getAllMunicipiosPorEstado("11");
 		LocalDate now = LocalDate.now();
 		List<Materia> materias = new ArrayList<>();
 		for (int i = 0; i <= 10; i++) {
@@ -61,3 +67,4 @@ public class DemoApplication {
 	}
 
 }
+

@@ -20,6 +20,7 @@
 </head>
 <body>
 <h1>Lista de Alunos</h1>
+<div th:if="${alunos.size() > 0}">
 <table>
     <thead>
     <tr>
@@ -36,26 +37,6 @@
 
     </tbody>
 </table>
-
-<h1>Lista de Estados</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Nome</th>
-        <th>Sigla</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Iteração sobre uma lista de alunos -->
-    <tr  th:each="estado : ${estados}">
-        <td th:text="${estado.getNome()}">Nome</td>
-        <td th:text="${estado.getSigla()}">Sigla</td>
-    </tr>
-
-    </tbody>
-</table>
-<div th:if="${alunos.size() == 0}">
-    <p>Nenhum aluno encontrado.</p>
 </div>
 </body>
 </html>

@@ -40,4 +40,12 @@ public record AlunoPostRequest(
     String registro
     ) {
 
+    public String getPrimeiroNome() {
+        return nomeCompleto.split(" ")[0];
+    }
+
+    public String getSobrenome() {
+        return nomeCompleto.split(" ")[1];
+    }
+
 }

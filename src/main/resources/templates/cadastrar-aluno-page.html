@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controllers</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Cadastrar Aluno</h1>
+
+<form action="#" th:action="@{/view/aluno/cadastrar}" th:object="${alunoPostRequest}" method="post">
+    <p>Nome Completo: <input type="text" th:field="*{nomeCompleto}" /></p>
+    <p>Documento: <input type="text" th:field="*{documento}" /></p>
+    <p>Registro: <input type="text" th:field="*{registro}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+
+</body>
+</html>
