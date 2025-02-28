@@ -13,6 +13,7 @@ public class AlunoPatchNome  {
 
   @NotBlank
   @Size(min = 0, max = 30)
+
   private String sobrenome;
 
 }
