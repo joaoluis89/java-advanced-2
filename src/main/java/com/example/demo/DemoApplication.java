@@ -38,6 +38,7 @@ public class DemoApplication {
 		List<EstadoResponse> allEstados = ibgeLocalidadesClient.getAllEstados();
 		List<MunicipioResponse> municipioPorEstado = ibgeLocalidadesClient.getAllMunicipiosPorEstado("11");
 		LocalDate now = LocalDate.now();
+		String outracoisa= "Alteracao";
 		List<Materia> materias = new ArrayList<>();
 		for (int i = 0; i <= 10; i++) {
 			Materia build = Materia.builder()
