@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CadeiaDeResponsabilidadeDeValidacaoDoAlunoPostRequest {
 
-    private final List<ValidadorDoAlunoPostRequest> validadorDoAlunoPostRequests;
+    private final List<EloValidadorDoAlunoPostRequest> eloValidadorDoAlunoPostRequests;
 
 
     public ContextoDeCadeia handle(ContextoDeCadeia contextoDeCadeia) {
 
         ContextoDeCadeia temp = contextoDeCadeia;
 
-        for(ValidadorDoAlunoPostRequest validadorDoAlunoPostRequest: validadorDoAlunoPostRequests) {
-            temp = validadorDoAlunoPostRequest.handle(temp);
+        for(EloValidadorDoAlunoPostRequest eloValidadorDoAlunoPostRequest : eloValidadorDoAlunoPostRequests) {
+            temp = eloValidadorDoAlunoPostRequest.handle(temp);
         }
         return temp;
     }

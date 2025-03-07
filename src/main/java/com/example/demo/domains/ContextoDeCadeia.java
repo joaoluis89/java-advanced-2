@@ -1,7 +1,7 @@
 package com.example.demo.domains;
 
 import com.example.demo.gateways.requests.AlunoPostRequest;
-import com.example.demo.usecases.ValidadorDoAlunoPostRequest;
+import com.example.demo.usecases.EloValidadorDoAlunoPostRequest;
 import java.util.Stack;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,11 +15,11 @@ public class ContextoDeCadeia {
 
     AlunoPostRequest alunoPostRequest;
     @Builder.Default
-    Stack<Triple<Class<? extends ValidadorDoAlunoPostRequest>, String, Boolean>> aprovacoes = new Stack<>();
+    Stack<Triple<Class<? extends EloValidadorDoAlunoPostRequest>, String, Boolean>> aprovacoes = new Stack<>();
 
 
     public void addApproval(
-        Class<? extends ValidadorDoAlunoPostRequest> classeAprovadora,
+        Class<? extends EloValidadorDoAlunoPostRequest> classeAprovadora,
         String mensagem,
         Boolean aprovacao) {
         this.aprovacoes.push(Triple.of(classeAprovadora, mensagem, aprovacao));

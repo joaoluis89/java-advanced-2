@@ -21,7 +21,7 @@
 <body>
 <h1>Cadastrar Aluno</h1>
 
-<form action="#" th:action="@{/view/aluno/cadastrar}" th:object="${alunoPostRequest}" method="post">
+<form action="#" th:action="@{/view/aluno/cadastrar}" th:object="${alunoPostRequest}" th:method="PUT" method="post">
     <p>Nome Completo: <input type="text" th:field="*{nomeCompleto}" /></p>
     <p>Documento: <input type="text" th:field="*{documento}" /></p>
     <p>Registro: <input type="text" th:field="*{registro}" /></p>

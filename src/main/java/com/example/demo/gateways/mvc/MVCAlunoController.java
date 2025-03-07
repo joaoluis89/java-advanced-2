@@ -6,6 +6,8 @@ import com.example.demo.gateways.AlunoRepository;
 import com.example.demo.gateways.clients.IbgeClient;
 import com.example.demo.gateways.clients.response.EstadoResponse;
 import com.example.demo.gateways.requests.AlunoPostRequest;
+import com.example.demo.usecases.AlunoPostRequestValidation;
+import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +59,8 @@ public class MVCAlunoController {
     }
 
     @PostMapping("/cadastrar")
-    public ModelAndView cadastrarAluno(AlunoPostRequest alunoPostRequest) {
+    public ModelAndView cadastrarAluno(@Valid @AlunoPostRequestValidation AlunoPostRequest alunoPostRequest) {
+
         Aluno alunoASerSalvo = Aluno.builder()
             .registro(alunoPostRequest.registro())
             .pessoa(Pessoa.builder()
