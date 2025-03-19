@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -31,11 +32,17 @@ public class DemoApplication {
 	private final MateriaRepository materiaRepository;
 	private final IbgeLocalidadesClient ibgeLocalidadesClient;
 	private final CadeiaDeResponsabilidadeDeValidacaoDoAlunoPostRequest validacaoDoAlunoPostRequest;
+	private final RabbitTemplate rabbitTemplate;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
+
+	@EventListener(value = ApplicationReadyEvent.class)
+	public void sendMessage() {
+		rabbitTemplate.convertAndSend( "myExchange", "routingKey", "Hello from RabbitMQ!");
+	}
 
 	@EventListener(value = ApplicationReadyEvent.class)
 	public void setupAlunos() {
