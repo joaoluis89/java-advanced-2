@@ -12,9 +12,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-
-
     database-platform: org.hibernate.dialect.OracleDialect
+  rabbitmq:
+    port: 5672
+    virtual-host: demo
+  profiles:
+    active: ${SPRING_PROFILE:local}
 
 logging:
   level:
@@ -27,3 +30,4 @@ jwt:
 springdoc:
   api-docs:
     path: /api-docs
+
