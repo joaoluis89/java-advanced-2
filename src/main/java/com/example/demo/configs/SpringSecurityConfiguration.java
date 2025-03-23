@@ -3,6 +3,7 @@ package com.example.demo.configs;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -28,7 +29,26 @@ public class SpringSecurityConfiguration {
     private String secretKey;
 
     @Bean
+    @ConditionalOnProperty(value = "security", havingValue = "enabled")
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+                    authorizationManagerRequestMatcherRegistry
+//                        .requestMatchers("/usuario").permitAll()
+//                        .requestMatchers("/aluno/**").hasRole("ALUNO")
+//                        .requestMatchers(HttpMethod.GET,"/auth").hasAuthority("LECIONA")
+//                        .requestMatchers(HttpMethod.POST, "/auth").hasRole("USUARIO")
+                        .anyRequest().denyAll()
+            )
+            .oauth2ResourceServer(oauthServer -> oauthServer.jwt(Customizer.withDefaults()))
+            .httpBasic(Customizer.withDefaults())
+            .build();
+    }
+
+    @Bean
+    @ConditionalOnProperty(value = "security", havingValue = "disabled", matchIfMissing = true)
+    public SecurityFilterChain securityFilterChainNotProd(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
