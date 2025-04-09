@@ -12,6 +12,7 @@ import com.example.demo.gateways.requests.AlunoPostRequest;
 import com.example.demo.gateways.responses.AlunoResponse;
 import com.example.demo.gateways.responses.MateriaResponse;
 import com.example.demo.usecases.CadastrarAluno;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -66,6 +67,7 @@ public class AlunoController {
     private final CadastrarAluno cadastrarAluno;
     private final AlunoRepository alunoRepository;
     private final MateriaRepository materiaRepository;
+    private final ObjectMapper objectMapper;
     //localhost:8080/aluno/fiap?sala=2tds
     //localhost:8080/aluno/fiap/sala
 
@@ -74,6 +76,7 @@ public class AlunoController {
      */
     @GetMapping
     public ResponseEntity<String> getAlunos(@RequestParam(required = false) List<String> sala) {
+        log.trace("Starting flow for getAunos");
         return ResponseEntity.ok("Hello World");
     }
 
@@ -225,5 +228,17 @@ public class AlunoController {
 
         return ResponseEntity.ok(alunosByMateriaPreferida);
     }
+
+
+//    @RabbitListener(queues = "nome-fila")
+//    public void onMessage(String message) {
+//        try {
+//            AlunoPostRequest alunoPostRequest = objectMapper.readValue(message, AlunoPostRequest.class);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        log.info("Mensagem recebida: {}", message);
+//    }
 
 }

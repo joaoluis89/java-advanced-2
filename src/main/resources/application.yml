@@ -16,6 +16,7 @@ spring:
   rabbitmq:
     port: 5672
     virtual-host: demo
+
   profiles:
     active: ${SPRING_PROFILE:local}
 

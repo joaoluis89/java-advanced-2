@@ -4,10 +4,12 @@ package com.example.demo.usecases;
 import com.example.demo.domains.ContextoDeCadeia;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CadeiaDeResponsabilidadeDeValidacaoDoAlunoPostRequest {
 
     private final List<EloValidadorDoAlunoPostRequest> eloValidadorDoAlunoPostRequests;
@@ -16,6 +18,9 @@ public class CadeiaDeResponsabilidadeDeValidacaoDoAlunoPostRequest {
     public ContextoDeCadeia handle(ContextoDeCadeia contextoDeCadeia) {
 
         ContextoDeCadeia temp = contextoDeCadeia;
+
+
+
 
         for(EloValidadorDoAlunoPostRequest eloValidadorDoAlunoPostRequest : eloValidadorDoAlunoPostRequests) {
             temp = eloValidadorDoAlunoPostRequest.handle(temp);

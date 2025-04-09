@@ -1,4 +1,9 @@
 logging:
   level:
     root: info
+    com.example.demo.DemoApplication: trace
+    com.example.demo.gateways: trace
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%-20.20thread] %-5level %-0.40logger{39}  %green(%logger{15}) %mdc : %msg%n"
+
 

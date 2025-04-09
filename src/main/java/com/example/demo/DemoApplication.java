@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +27,7 @@ import org.springframework.context.event.EventListener;
 @SpringBootApplication
 @RequiredArgsConstructor
 @EnableFeignClients
+@Slf4j
 public class DemoApplication {
 
 	private final AlunoRepository alunoRepository;
@@ -51,6 +53,7 @@ public class DemoApplication {
 		List<MunicipioResponse> municipioPorEstado = ibgeLocalidadesClient.getAllMunicipiosPorEstado("11");
 		LocalDate now = LocalDate.now();
 		List<Materia> materias = new ArrayList<>();
+		log.trace("Starting aluno warmup {}", now);
 
 
 		AlunoPostRequest alunoPostRequest = new AlunoPostRequest("Joao PAcheco", "8929282", "asderw8r29hud");

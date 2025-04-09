@@ -1,1 +1,4 @@
 security: enabled
+logging:
+  level:
+    root: warn
